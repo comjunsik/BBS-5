@@ -34,3 +34,21 @@ join.jsp 회원가입
 </div>
 </div>
 ```
+```jsp
+<div class = "btn-group" data-toggle="buttons">
+				<label class = "btn btn-primary active">
+					<input type="radio" name="userGender" autocomplete="off" value="남자" checked>남자
+				</label>
+				<label class = "btn btn-primary">
+					<input type="radio" name="userGender" autocomplete="off" value="여자" checked>여자
+				</label>
+				</div>
+				</div>
+```
+**버튼 그룹**<br>
+버튼 그룹으로 한줄에 버튼을 그룹화 하고, 자바스크립트를 통해 이벤트 처리를 한다.<br>
+**data-toggle="buttons"**<br>
+버튼의 토글 상태를 위해 추가한 태그, **label class = "btn btn-primary active"** 처럼 active를 넣어 주면 기본 값으로 토글된 상태가 된다.<br>
+**label** class = "btn btn-primary active"<br>
+label을 준 이유는 부트스트랩에서 checkbox나 radio 버튼에 토글을 적용하기 위해서이다.<br>
+**checked** 속성으로 수동으로 입력 받는다.
