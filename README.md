@@ -52,3 +52,25 @@ join.jsp 회원가입
 **label** class = "btn btn-primary active"<br>
 label을 준 이유는 부트스트랩에서 checkbox나 radio 버튼에 토글을 적용하기 위해서이다.<br>
 **checked** 속성으로 수동으로 입력 받는다.
+
+# UserDao.java
+```java
+public int join(User user) {
+		String SQL = "INSERT INTO USER VALUES(?, ?, ?, ?, ?)";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, user.getUserID());
+			pstmt.setString(2, user.getUserPassword());
+			pstmt.setString(3, user.getUserName());
+			pstmt.setString(4, user.getUserGender());
+			pstmt.setString(5, user.getUserEmail());
+			return pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+```
+회원가입을 위해 db접근 메서드<br>
+String SQL = "INSERT INTO USER VALUES(?, ?, ?, ?, ?)";<br>
+INSERT 문은 반환되는 값이 무조건 0이상이기 때문에 return 값이 -1이라면 오류가 난 것이다.<br>
