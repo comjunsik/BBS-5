@@ -80,4 +80,42 @@ pstmt = conn.prepareStatement(SQL); 문장의 prepareStatement를 통해 정해�
 그 후에 PrepareStatement.setString() 메서드를 통해 각각 해당하는 칼럼의 인덱스에 User.java에 들어있는 정보들을 db에 넣어준다.<br>
 마지막으로 **return pstmt.executeUpdate();** 를 통해 해당 statement를 실행한 결과를 db에 저장된 테이블을 갱신해준다.
 ***
+# joinAction.jsp
+```jsp
+<jsp:useBean id="user" class="user.User" scope="page" />
+<jsp:setProperty name="user" property="userID" />
+<jsp:setProperty name="user" property="userPassword" />
+<jsp:setProperty name="user" property="userName" />
+<jsp:setProperty name="user" property="userGender" />
+<jsp:setProperty name="user" property="userEmail" />
+```
+join.jsp에서 넘어오는 정보 5개를 모두 받아오기위해 자바빈즈를 사용하였다.<br>
+id= 자바빈을 사용할 아이디이름<br>
+class= 해당 정보가 들어있는 자바빈즈 class 이름<br>
+scope="page" 현재 페이지에만 적용되게 설정<br>
+name= 자바빈의 id<br>
+property= 정보를 받아올 해당 이름 **주의점:** property의 이름은 해당 폼이 있는 곳의 이름과 자바빈 클래스내의 변수 이름들이 같아야한다.<br>
+```jsp
+UserDAO userDAO = new UserDAO();
+	int result = userDAO.join(user);
+	if (result == -1){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('이미 존재하는 아이디입니다.')");
+		script.println("history.back()");
+		script.println("</script>");
+	}
+	else {
+		PrintWriter script = response.getWriter();
+		session.setAttribute("userID",user.getUserID());
+		script.println("<script>");
+		script.println("location.href = 'main.jsp'");
+		script.println("</script>");
+	}
+	}
+```
+**int result = userDAO.join(user);** 여기서 user는 해당 회원의 정보를 넘겨 받은 자바빈의 id 즉 user.User.java의 객체<br>
+result == -1 일때는 UserDAO.java에서 봤듯이 데이터베이스 오류이다. 이 경우에는 userID가 primary key이기 때문에 동일한 ID로 가입을<br>
+시도했을때에 해당한다.<br>
+script.println("location.href = 'main.jsp'"); 회원가입이 정상적으로 진행 되었을때 main.jsp로 이동
 
